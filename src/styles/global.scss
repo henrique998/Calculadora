@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #17171C;
+    --text: #FFFFFF;
+    --primary: #4B5EFC;
+    --secondary: #4E505F;
+    --tertiary: #2E2F38;
+}
+
+
+:focus {
+    outline: 0;
+}
+
+main {
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body,
+input,
+textarea,
+button {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+}
