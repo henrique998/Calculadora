@@ -8,12 +8,13 @@ let currentValueElement = document.querySelector<HTMLSpanElement>('[data-type="c
 const clearButton = document.querySelector<HTMLButtonElement>('[data-type="clear"]')
 const equalsButton = document.querySelector<HTMLButtonElement>('[data-type="equals"')
 const bulletButton = document.querySelector<HTMLButtonElement>('[data-type="bullet"')
+const backspaceButton = document.querySelector<HTMLButtonElement>('[data-type="backspace"')
 
 type Operator = string | null
 
 let operator: Operator = null
 
-function initDisplay() {
+function bootStrap() {
     numericButtons.forEach(button => {
         button.addEventListener("click", () => {
             currentValueElement!.innerText += button.innerText
@@ -22,14 +23,16 @@ function initDisplay() {
 }
 
 function updateOperator(sign: string) {
-    if (operator === null && !currentValueElement.innerText.includes(sign)) {
+    if (!currentValueElement.innerText.includes(sign)) {
         currentValueElement.innerText += sign
         operator = sign
     }
 }
 
 function addBullet() {
-    if (!currentValueElement.innerText.includes(".")) {
+    const hasntCurrentValueBullet = !currentValueElement.innerText.includes(".")
+
+    if (hasntCurrentValueBullet) {
         currentValueElement.innerText += bulletButton.value
     } else {
         return;
@@ -37,9 +40,14 @@ function addBullet() {
 }
 
 function calculate() {
+    let result: string
     const currentValueInNumber = parseFloat(currentValueElement!.innerText)
     const previousValueInNumber = parseFloat(previousValueElement!.innerText)
-    let result: string
+    const hasSomeNumberInView = currentValueElement.innerText.length > 0
+
+    if (!hasSomeNumberInView) {
+        return;
+    }
 
     switch (operator) {
         case "+":
@@ -96,12 +104,16 @@ function calculate() {
     operator = null
 }
 
+function backSpace() {
+    currentValueElement.innerHTML = currentValueElement.innerText.substring(0, currentValueElement.innerText.length - 1)
+}
+
 function clearCurrentResult() {
     previousValueElement!.innerHTML = ""
     currentValueElement!.innerText = ""
 }
 
-initDisplay()
+bootStrap()
 
 operators?.forEach(button => {
     button.addEventListener("click", () => {
@@ -119,3 +131,4 @@ operators?.forEach(button => {
 clearButton?.addEventListener("click", clearCurrentResult)
 bulletButton?.addEventListener("click", addBullet)
 equalsButton?.addEventListener("click", calculate)
+backspaceButton?.addEventListener("click", backSpace)
